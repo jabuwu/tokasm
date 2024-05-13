@@ -29,8 +29,6 @@ mod native {
     }
 
     pub struct RwLock<T: ?Sized>(tokio::sync::RwLock<T>);
-    unsafe impl<T> Send for RwLock<T> where T: ?Sized + Send {}
-    unsafe impl<T> Sync for RwLock<T> where T: ?Sized + Send + Sync {}
 
     impl<T: ?Sized> RwLock<T> {
         pub fn new(value: T) -> Self
@@ -209,7 +207,6 @@ mod wasm {
     pub struct InteriorMutability<T: ?Sized> {
         cell: UnsafeCell<T>,
     }
-    unsafe impl<T: ?Sized> Send for InteriorMutability<T> {}
 
     impl<T: ?Sized> InteriorMutability<T> {
         pub fn new(value: T) -> Self
@@ -287,8 +284,6 @@ mod wasm {
         read_notify: Arc<Notify>,
         value: Arc<InteriorMutability<T>>,
     }
-    unsafe impl<T> Send for RwLock<T> where T: ?Sized + Send {}
-    unsafe impl<T> Sync for RwLock<T> where T: ?Sized + Send + Sync {}
 
     impl<T: ?Sized> RwLock<T> {
         pub fn new(value: T) -> Self
