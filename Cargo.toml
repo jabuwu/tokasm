@@ -1,0 +1,24 @@
+[package]
+name = "tokasm"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokasm_macros.path = "./macros"
+tracing = "0.1.40"
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+js-sys = "0.3.66"
+wasm-bindgen-futures = "0.4.39"
+wasm-bindgen = "0.2.89"
+web-sys = { version = "0.3.66", features = [
+    "console",
+    "Window",
+] }
+
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+tokio = { version = "1.37.0", features = ["full"] }
+
+[dev-dependencies]
+shadow-clone = "1.2.1"
+unilog.git = "https://github.com/jabuwu/unilog"
