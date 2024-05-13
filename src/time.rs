@@ -6,6 +6,8 @@ mod native {
         tokio::time::sleep(duration).await;
     }
 }
+use std::time::Duration;
+
 #[cfg(not(target_arch = "wasm32"))]
 pub use native::*;
 
@@ -33,3 +35,9 @@ mod wasm {
 }
 #[cfg(target_arch = "wasm32")]
 pub use wasm::*;
+
+pub async fn sleep_forever() -> ! {
+    loop {
+        sleep(Duration::from_secs(22896000)).await;
+    }
+}
